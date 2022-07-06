@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static chap01.AppleColor.GREEN;
+import static chap01.AppleColor.RED;
+
 public class FilterAndSortApples {
 
     public static void main(String[] args) {
         List<Apple> apples = new ArrayList<>();
-        apples.add(new Apple(8, "Green"));
-        apples.add(new Apple(5, "Red"));
-        apples.add(new Apple(4, "Green"));
-        apples.add(new Apple(9, "Red"));
+        apples.add(new Apple(8, GREEN));
+        apples.add(new Apple(5, RED));
+        apples.add(new Apple(4, GREEN));
+        apples.add(new Apple(9, RED));
 
         // 자바 8 이전의 정렬
         Collections.sort(apples, new Comparator<Apple>() {
@@ -55,14 +58,14 @@ public class FilterAndSortApples {
         // 병렬 스트림(위는 순차 스트림)
         startTime = System.nanoTime();
         greenApples = apples.parallelStream().filter(Apple::isGreen)
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
         endTime = System.nanoTime();
         System.out.println("수행시간: " + (endTime - startTime));
         System.out.println(greenApples);
 
         /*
-        * 실제 측정 시간은 병렬 스트림이 더 오래걸리는 것을 볼 수 있다.
-        * 왜? 병렬 스트림에서 발생하는 스레드 오버헤드 때문에 소량의 데이터에 대해선 순차 스트림이 더 뛰어난 성능을 보여준다.
+        실제 측정 시간은 병렬 스트림이 더 오래걸리는 것을 볼 수 있다.
+        왜? 병렬 스트림에서 발생하는 스레드 오버헤드 때문에 소량의 데이터에 대해선 순차 스트림이 더 뛰어난 성능을 보여준다.
         */
     }
 
@@ -102,47 +105,5 @@ public class FilterAndSortApples {
         }
 
         return ret;
-    }
-
-    static class Apple {
-
-        private int weight;
-
-        private String color;
-
-        public Apple(int weight, String color) {
-            this.weight = weight;
-            this.color = color;
-        }
-
-        public int getWeight() {
-            return weight;
-        }
-
-        public void setWeight(int weight) {
-            this.weight = weight;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        public void setColor(String color) {
-            this.color = color;
-        }
-
-        // 자바 8 이후의 필터링 - 메소드 참조에서 사용하기 위한 함수
-        public boolean isGreen() {
-            return this.color.equals("Green");
-        }
-
-        public boolean isHeavy() {
-            return this.weight > 5;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("Apple{weight=%d, color=%s}", weight, color);
-        }
     }
 }
