@@ -34,7 +34,7 @@ public class PrimitiveStream {
         System.out.println();
 
         // 숫자 범위 만들기
-        // 자바 8의 IntStream과 LongStream에는 range와 rangeClosed의 두 가지 static 메소드를 제공한다. 각각 열린 범위와 닫힌 범위를 만든다.
+        // 자바 8의 IntStream과 LongStream에는 range와 rangeClosed의 두 가지 static 메소드를 제공한다. 각각 반열린 범위와 닫힌 범위를 만든다.
         IntStream rangeOfTen1 = IntStream.range(0, 11);         // (0, 11)
         IntStream rangeOfTen2 = IntStream.rangeClosed(1, 10);   // [1, 10]
         rangeOfTen1.forEach(System.out::println);
